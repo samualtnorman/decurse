@@ -1,16 +1,25 @@
 {
-	"name": "typescript-template",
+	"name": "decurse",
 	"version": "0.0.0",
-	"description": "remember to update urls in this file",
-	"keywords": [],
-	"homepage": "https://github.com/samualtnorman/typescript-template#readme",
+	"description": "An abstraction over continuation-passing and trampolining to write recursive functions that don't exceed the maximum call stack size. ",
+	"keywords": [
+		"recursion",
+		"abstraction",
+		"trampoline",
+		"callstack",
+		"continuation-passing-style",
+		"continuation-passing",
+		"call-stack",
+		"decurse"
+	],
+	"homepage": "https://github.com/samualtnorman/decurse#readme",
 	"bugs": {
-		"url": "https://github.com/samualtnorman/typescript-template/issues",
+		"url": "https://github.com/samualtnorman/decurse/issues",
 		"email": "me@samual.uk"
 	},
 	"license": "MIT",
 	"author": "Samual Norman <me@samual.uk> (https://samual.uk/)",
-	"repository": "github:samualtnorman/typescript-template",
+	"repository": "github:samualtnorman/decurse",
 	"type": "module",
 	"dependencies": {
 		"@samual/types": "^0.0.1"
@@ -33,5 +42,8 @@
 		"node": "^20.10 || ^22 || >=24",
 		"pnpm": "^10"
 	},
-	"private": true
+	"private": true,
+	"exports": {
+		".": "./default.js"
+	}
 }

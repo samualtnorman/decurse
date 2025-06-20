@@ -3,7 +3,7 @@ An abstraction over continuation-passing and trampolining to write recursive fun
 
 ## Example
 ```js
-import { makeDecurse } from "decurse"
+import { makeDecurse } from "{PACKAGE_NAME}"
 
 const decurse = makeDecurse()
 
