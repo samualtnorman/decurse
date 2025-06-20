@@ -12,5 +12,5 @@ const factorial = (/** @type {bigint} */ n) => decurse(() => n
 	: 1n
 )
 
-factorial.then(value => console.log(value))
+factorial(100_000n).then(value => console.log(value))
 ```
