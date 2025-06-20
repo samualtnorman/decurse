@@ -36,8 +36,7 @@
 		"jsr": "^0.13.4",
 		"rollup": "^4.43.0",
 		"semver": "^7.7.2",
-		"typescript": "^5.8.3",
-		"vitest": "^3.2.3"
+		"typescript": "^5.8.3"
 	},
 	"engines": {
 		"node": "^20.10 || ^22 || >=24",

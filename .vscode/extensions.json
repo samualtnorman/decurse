@@ -1,6 +1,5 @@
 {
 	"recommendations": [
-		"vitest.explorer",
 		"usernamehw.errorlens",
 		"aaron-bond.better-comments",
 		"yoavbls.pretty-ts-errors"
