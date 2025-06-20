@@ -6,7 +6,7 @@ import packageJson from "../package.json" with { type: "json" }
 	"@samual/types": "@samual/types"
 }
 
-const { name, version, license, dependencies } = packageJson
+const { version, license, dependencies } = packageJson
 
 makeDirectorySync("dist", { recursive: true })
 
@@ -16,7 +16,7 @@ const imports = Object.fromEntries(Object.entries(dependencies).map(
 
 writeFileSync(
 	"dist/jsr.json",
-	JSON.stringify({ name, version, license, exports: { ".": `./default.ts` }, imports }, undefined, "\t")
+	JSON.stringify({ name: `@sn/decurse`, version, license, exports: { ".": `./default.ts` }, imports }, undefined, "\t")
 )
 
 process.exit()
