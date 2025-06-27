@@ -1,0 +1,53 @@
+{
+	"name": "decurse",
+	"version": "0.0.0",
+	"description": "An abstraction over continuation-passing and trampolining to write recursive functions that don't exceed the maximum call stack size. ",
+	"keywords": [
+		"recursion",
+		"abstraction",
+		"trampoline",
+		"callstack",
+		"continuation-passing-style",
+		"continuation-passing",
+		"call-stack",
+		"decurse"
+	],
+	"homepage": "https://github.com/samualtnorman/decurse#readme",
+	"bugs": {
+		"url": "https://github.com/samualtnorman/decurse/issues",
+		"email": "me@samual.uk"
+	},
+	"license": "MIT",
+	"author": "Samual Norman <me@samual.uk> (https://samual.uk/)",
+	"contributors": [
+		"Fayti1703"
+	],
+	"repository": "github:samualtnorman/decurse",
+	"type": "module",
+	"dependencies": {
+		"@samual/types": "^0.0.1"
+	},
+	"devDependencies": {
+		"@babel/plugin-syntax-typescript": "^7.27.1",
+		"@rollup/plugin-babel": "^6.0.4",
+		"@samual/lib": "^0.13.0",
+		"@samual/rollup-config": "^0.1.2",
+		"@total-typescript/ts-reset": "^0.6.1",
+		"@types/node": "~20.10.8",
+		"@types/semver": "^7.7.0",
+		"babel-plugin-here": "^1.0.2",
+		"jsr": "^0.13.4",
+		"rollup": "^4.43.0",
+		"semver": "^7.7.2",
+		"typescript": "^5.8.3"
+	},
+	"engines": {
+		"node": "^20.10 || ^22 || >=24",
+		"pnpm": "^10"
+	},
+	"private": true,
+	"exports": {
+		".": "./default.js",
+		"./OffStack": "./OffStack.js"
+	}
+}

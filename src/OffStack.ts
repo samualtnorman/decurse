@@ -3,27 +3,19 @@
  * @license MIT
  * @module
  */
+import type { Decurse } from "./default"
 
-const pending = []
-let active = false
-
-/**
- * @author Fayti1703
- * @license MIT
- */
-export function pumpLoop() {
-	if (active)
+export function pump(decurse: Decurse): void {
+	if (decurse.active)
 		return
 
-	active = true
+	decurse.active = true
 
 	try {
-		while (pending.length != 0) {
-			let el = pending.pop()
-			el()
-		}
+		if (decurse.pending.length)
+			decurse.pending.pop()!()
 	} finally {
-		active = false
+		decurse.active = false
 	}
 }
 
@@ -31,42 +23,67 @@ export function pumpLoop() {
  * @author Fayti1703
  * @license MIT
  */
-export default class OffStack {
+export function pumpAll(decurse: Decurse): void {
+	if (decurse.active)
+		return
+
+	decurse.active = true
+
+	try {
+		while (decurse.pending.length)
+			decurse.pending.pop()!()
+	} finally {
+		decurse.active = false
+	}
+}
+
+/**
+ * @author Fayti1703
+ * @license MIT
+ */
+export class OffStack<T> {
 	#resolved = false
-	#value = undefined
-	#dependents = []
+	#value: T | undefined = undefined
+	#dependents: ((value: T) => void)[] = []
+	#decurse: Decurse
 
-	constructor(executor) {
-		pending.push(() => this.#run(executor))
-		pumpLoop()
+	private constructor(decurse: Decurse, executor: (resolve: (value: T | OffStack<T>) => void) => void) {
+		this.#decurse = decurse
+		decurse.pending.push(() => executor(value => this.#resolve(value)))
+
+		if (decurse.autoPump)
+			pumpAll(decurse)
 	}
 
-	#run(executor) {
-		executor(value => this.#resolve(value))
-	}
-
-	#resolve(value) {
-		if (value instanceof OffStack) {
-			value.#dependents.push(v => this.#resolve(v))
+	#resolve(value: T | OffStack<T>): void {
+		if (this.#resolved)
 			return
+
+		if (value instanceof OffStack) {
+			if (value.#resolved) {
+				value = value.#value!
+			} else {
+				value.#dependents.push(value => this.#resolve(value))
+				return
+			}
 		}
 
 		this.#resolved = true
 		this.#value = value
 
-		for (const dep of this.#dependents)
-			pending.push(() => dep(this.#value))
+		for (const dependent of this.#dependents)
+			this.#decurse.pending.push(() => dependent(this.#value!))
 
-		pumpLoop()
+		if (this.#decurse.autoPump)
+			pumpAll(this.#decurse)
 	}
 
-	then(cb) {
-		return new OffStack(y => {
-			if (this.#resolved) {
-				pending.push(() => y(cb(this.#value)))
-			} else {
-				this.#dependents.push(v => y(cb(v)))
-			}
+	then<U>(callback: (result: T) => U | OffStack<U>): OffStack<U> {
+		return new OffStack<U>(this.#decurse, resolve => {
+			if (this.#resolved)
+				this.#decurse.pending.push(() => resolve(callback(this.#value!)))
+			else
+				this.#dependents.push(value => resolve(callback(value)))
 		})
 	}
 }
